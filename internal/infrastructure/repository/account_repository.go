@@ -5,8 +5,7 @@ import (
 	"errors"
 	"log"
 
-	domain "github.com/LeoTwins/go-clean-architecture/internal/domain/model/account"
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/finance"
+	domain "github.com/LeoTwins/go-clean-architecture/internal/domain/model"
 	"github.com/LeoTwins/go-clean-architecture/internal/domain/repository"
 	dbModel "github.com/LeoTwins/go-clean-architecture/internal/infrastructure/repository/model"
 	"gorm.io/gorm"
@@ -30,7 +29,7 @@ func (ar *accountRepository) FindByID(ctx context.Context, id uint) (*domain.Acc
 		return nil, result.Error
 	}
 
-	money, err := finance.NewMoney(dbAcc.Balance)
+	money, err := domain.NewMoney(dbAcc.Balance)
 	if err != nil {
 		return nil, err
 	}

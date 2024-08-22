@@ -4,8 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/finance"
-	domain "github.com/LeoTwins/go-clean-architecture/internal/domain/model/transaction"
+	domain "github.com/LeoTwins/go-clean-architecture/internal/domain/model"
 	"github.com/LeoTwins/go-clean-architecture/internal/domain/repository"
 	dbModel "github.com/LeoTwins/go-clean-architecture/internal/infrastructure/repository/model"
 	"gorm.io/gorm"
@@ -27,7 +26,7 @@ func (tr *transactionRepository) FindByAccountID(accountID uint) ([]*domain.Tran
 
 	res := []*domain.Transaction{}
 	for _, v := range transaction {
-		money, err := finance.NewMoney(v.Amount)
+		money, err := domain.NewMoney(v.Amount)
 		if err != nil {
 			return nil, err
 		}
@@ -53,7 +52,7 @@ func (tr *transactionRepository) FindByID(id uint) (*domain.Transaction, error) 
 		return nil, result.Error
 	}
 
-	res, err := domain.NewTransaction(transaction.ID, transaction.AccountID, domain.TransactionType(transaction.Type), finance.Money(transaction.Amount), transaction.Date)
+	res, err := domain.NewTransaction(transaction.ID, transaction.AccountID, domain.TransactionType(transaction.Type), domain.Money(transaction.Amount), transaction.Date)
 	if err != nil {
 		return nil, err
 	}
