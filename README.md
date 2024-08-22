@@ -21,13 +21,10 @@ root@{container_id}:/go/src/app# sql-migrate up
 ├── internal
 │   ├── domain                             # ドメイン（エンティティ）層
 │   │   ├── model                          # エンティティ・値オブジェクト
-│   │   │   ├── account
-│   │   │   │   ├── account.go
-│   │   │   │   └── balance.go
-│   │   │   ├── finance
-│   │   │   │   └── money.go
-│   │   │   └── transaction
-│   │   │       └── transaction.go
+│   │   │   ├── account.go
+│   │   │   ├── balance.go
+│   │   │   ├── money.go
+│   │   │   └── transaction.go
 │   │   └── repository                     # リポジトリーのインターフェース
 │   │       ├── account_repository.go
 │   │       └── transaction_repository.go
