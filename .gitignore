@@ -1,3 +1,4 @@
 .env
-./postgres
 .DS_STORE
+postgres
+tmp
