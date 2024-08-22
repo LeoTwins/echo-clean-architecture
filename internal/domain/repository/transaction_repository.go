@@ -3,11 +3,11 @@ package repository
 import (
 	"context"
 
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/transaction"
+	"github.com/LeoTwins/go-clean-architecture/internal/domain/model"
 )
 
 type ITransactionRepository interface {
-	FindByID(id uint) (*transaction.Transaction, error)
-	FindByAccountID(accountID uint) ([]*transaction.Transaction, error)
-	Save(ctx context.Context, tx *transaction.Transaction) error
+	FindByID(id uint) (*model.Transaction, error)
+	FindByAccountID(accountID uint) ([]*model.Transaction, error)
+	Save(ctx context.Context, tx *model.Transaction) error
 }
