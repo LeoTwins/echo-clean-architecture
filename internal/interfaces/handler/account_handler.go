@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/finance"
+	"github.com/LeoTwins/go-clean-architecture/internal/domain/model"
 	"github.com/LeoTwins/go-clean-architecture/internal/interfaces/handler/dto"
 	"github.com/LeoTwins/go-clean-architecture/internal/usecase/port/input"
 	"github.com/labstack/echo/v4"
@@ -30,7 +30,7 @@ func (ah *accountHandler) OpenAccount(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	money, err := finance.NewMoney(req.Balance)
+	money, err := model.NewMoney(req.Balance)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
@@ -55,7 +55,7 @@ func (ah *accountHandler) Deposit(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	money, err := finance.NewMoney(req.Amount)
+	money, err := model.NewMoney(req.Amount)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
@@ -73,7 +73,7 @@ func (ah *accountHandler) Withdraw(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	amount, err := finance.NewMoney(req.Amount)
+	amount, err := model.NewMoney(req.Amount)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
@@ -91,7 +91,7 @@ func (ah *accountHandler) Transfer(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	money, err := finance.NewMoney(req.Amount)
+	money, err := model.NewMoney(req.Amount)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
