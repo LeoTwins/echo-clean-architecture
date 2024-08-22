@@ -1,7 +1,7 @@
 package presenter
 
 import (
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/transaction"
+	"github.com/LeoTwins/go-clean-architecture/internal/domain/model"
 	"github.com/LeoTwins/go-clean-architecture/internal/usecase/dto"
 	"github.com/LeoTwins/go-clean-architecture/internal/usecase/port/output"
 )
@@ -12,7 +12,7 @@ func NewTransactionPresenter() output.ITransactionPresenter {
 	return &transactionPresenter{}
 }
 
-func (t *transactionPresenter) Output(tx transaction.Transaction) dto.TransactionOutput {
+func (t *transactionPresenter) Output(tx model.Transaction) dto.TransactionOutput {
 	return dto.TransactionOutput{
 		ID:     tx.ID,
 		Type:   convertTransactionType(tx.Type),
@@ -21,13 +21,13 @@ func (t *transactionPresenter) Output(tx transaction.Transaction) dto.Transactio
 	}
 }
 
-func convertTransactionType(t transaction.TransactionType) string {
+func convertTransactionType(t model.TransactionType) string {
 	switch t {
-	case transaction.Deposit:
+	case model.Deposit:
 		return "入金"
-	case transaction.Withdrawal:
+	case model.Withdrawal:
 		return "出金"
-	case transaction.Transfer:
+	case model.Transfer:
 		return "振込"
 	default:
 		return "不明"
