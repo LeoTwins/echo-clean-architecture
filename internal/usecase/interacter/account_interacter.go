@@ -4,9 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/account"
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/finance"
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/transaction"
+	"github.com/LeoTwins/go-clean-architecture/internal/domain/model"
 	"github.com/LeoTwins/go-clean-architecture/internal/domain/repository"
 	"github.com/LeoTwins/go-clean-architecture/internal/infrastructure/service"
 	"github.com/LeoTwins/go-clean-architecture/internal/usecase/port/input"
@@ -22,8 +20,8 @@ func NewAccountUsecase(accountRepo repository.IAccountRepository, transactionRep
 	return &accountUsecase{accountRepo, transactionRepo, transactionManager}
 }
 
-func (a *accountUsecase) OpenAccount(ctx context.Context, name string, initialDeposit finance.Money) (*account.Account, error) {
-	acc, err := account.NewAccount(0, name, initialDeposit)
+func (a *accountUsecase) OpenAccount(ctx context.Context, name string, initialDeposit model.Money) (*model.Account, error) {
+	acc, err := model.NewAccount(0, name, initialDeposit)
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +33,7 @@ func (a *accountUsecase) OpenAccount(ctx context.Context, name string, initialDe
 	return acc, nil
 }
 
-func (au *accountUsecase) Deposit(ctx context.Context, accountID uint, amount finance.Money) error {
+func (au *accountUsecase) Deposit(ctx context.Context, accountID uint, amount model.Money) error {
 	return au.transactionManager.ExecuteTransaction(func() error {
 		acc, err := au.accountRepo.FindByID(ctx, accountID)
 		if err != nil {
@@ -50,7 +48,7 @@ func (au *accountUsecase) Deposit(ctx context.Context, accountID uint, amount fi
 			return err
 		}
 
-		transaction, err := transaction.NewTransaction(0, accountID, transaction.Deposit, amount, time.Now())
+		transaction, err := model.NewTransaction(0, accountID, model.Deposit, amount, time.Now())
 		if err != nil {
 			return err
 		}
@@ -63,7 +61,7 @@ func (au *accountUsecase) Deposit(ctx context.Context, accountID uint, amount fi
 	})
 }
 
-func (au *accountUsecase) Withdraw(ctx context.Context, accountID uint, amount finance.Money) error {
+func (au *accountUsecase) Withdraw(ctx context.Context, accountID uint, amount model.Money) error {
 	return au.transactionManager.ExecuteTransaction(func() error {
 		acc, err := au.accountRepo.FindByID(ctx, accountID)
 		if err != nil {
@@ -78,7 +76,7 @@ func (au *accountUsecase) Withdraw(ctx context.Context, accountID uint, amount f
 			return err
 		}
 
-		transaction, err := transaction.NewTransaction(0, accountID, transaction.Withdrawal, amount, time.Now())
+		transaction, err := model.NewTransaction(0, accountID, model.Withdrawal, amount, time.Now())
 		if err != nil {
 			return err
 		}
@@ -91,7 +89,7 @@ func (au *accountUsecase) Withdraw(ctx context.Context, accountID uint, amount f
 	})
 }
 
-func (au *accountUsecase) Transfer(ctx context.Context, fromAccountID uint, toAccountID uint, amount finance.Money) error {
+func (au *accountUsecase) Transfer(ctx context.Context, fromAccountID uint, toAccountID uint, amount model.Money) error {
 	return au.transactionManager.ExecuteTransaction(func() error {
 		fromAcc, err := au.accountRepo.FindByID(ctx, fromAccountID)
 		if err != nil {
@@ -115,7 +113,7 @@ func (au *accountUsecase) Transfer(ctx context.Context, fromAccountID uint, toAc
 			return err
 		}
 
-		fromTransaction, err := transaction.NewTransaction(0, fromAccountID, transaction.Withdrawal, amount, time.Now())
+		fromTransaction, err := model.NewTransaction(0, fromAccountID, model.Withdrawal, amount, time.Now())
 		if err != nil {
 			return err
 		}
@@ -124,7 +122,7 @@ func (au *accountUsecase) Transfer(ctx context.Context, fromAccountID uint, toAc
 			return err
 		}
 
-		toTransaction, err := transaction.NewTransaction(0, toAccountID, transaction.Deposit, amount, time.Now())
+		toTransaction, err := model.NewTransaction(0, toAccountID, model.Deposit, amount, time.Now())
 		if err != nil {
 			return err
 		}
