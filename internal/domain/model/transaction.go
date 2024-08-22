@@ -1,10 +1,8 @@
-package transaction
+package model
 
 import (
 	"errors"
 	"time"
-
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/finance"
 )
 
 type TransactionType string
@@ -19,11 +17,11 @@ type Transaction struct {
 	ID        uint
 	AccountID uint
 	Type      TransactionType
-	Amount    finance.Money
+	Amount    Money
 	Date      time.Time
 }
 
-func NewTransaction(id, accountID uint, transactionType TransactionType, amount finance.Money, date time.Time) (*Transaction, error) {
+func NewTransaction(id, accountID uint, transactionType TransactionType, amount Money, date time.Time) (*Transaction, error) {
 	if accountID == 0 {
 		return nil, errors.New("AccountIDが不正です")
 	}

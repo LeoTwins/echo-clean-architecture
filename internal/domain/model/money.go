@@ -1,4 +1,4 @@
-package finance
+package model
 
 import "errors"
 

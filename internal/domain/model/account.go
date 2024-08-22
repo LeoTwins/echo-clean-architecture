@@ -1,10 +1,8 @@
-package account
+package model
 
 import (
 	"errors"
 	"fmt"
-
-	"github.com/LeoTwins/go-clean-architecture/internal/domain/model/finance"
 )
 
 const MIN_AMOUNT = 1000
@@ -15,7 +13,7 @@ type Account struct {
 	Balance *balance
 }
 
-func NewAccount(id uint, name string, amount finance.Money) (*Account, error) {
+func NewAccount(id uint, name string, amount Money) (*Account, error) {
 	if name == "" {
 		return nil, errors.New("氏名は必須です")
 	}
@@ -29,7 +27,7 @@ func NewAccount(id uint, name string, amount finance.Money) (*Account, error) {
 	}, nil
 }
 
-func (a *Account) Deposit(amount finance.Money) error {
+func (a *Account) Deposit(amount Money) error {
 	if amount < MIN_AMOUNT {
 		return errors.New("金額は1,000円以上で指定してください")
 	}
@@ -37,7 +35,7 @@ func (a *Account) Deposit(amount finance.Money) error {
 	return nil
 }
 
-func (a *Account) WithDraw(amount finance.Money) error {
+func (a *Account) WithDraw(amount Money) error {
 	if amount < MIN_AMOUNT {
 		return errors.New("金額は1,000円以上で指定してください")
 	}
@@ -48,7 +46,7 @@ func (a *Account) WithDraw(amount finance.Money) error {
 	return nil
 }
 
-func (a *Account) Transter(to *Account, amount finance.Money) error {
+func (a *Account) Transter(to *Account, amount Money) error {
 	if amount < MIN_AMOUNT {
 		return errors.New("金額は1,000円以上で指定してください")
 	}
