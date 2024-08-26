@@ -47,6 +47,7 @@ root@{container_id}:/go/src/app# sql-migrate up
 │   │   │   ├── account_handler.go
 │   │   │   └── transaction_handler.go
 │   │   ├── middleware                     # Echo Middleware
+│   │   │   └── logger.go
 │   │   └── presenter                      # output portの実装
 │   │       └── transaction_presenter.go
 │   └── usecase　　　　　　　　　　 　　　　    # ユースケース層
