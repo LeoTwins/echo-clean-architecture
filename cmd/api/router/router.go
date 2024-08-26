@@ -1,16 +1,27 @@
 package router
 
 import (
+	"log"
+
 	"github.com/LeoTwins/go-clean-architecture/internal/infrastructure/repository"
 	"github.com/LeoTwins/go-clean-architecture/internal/infrastructure/service"
 	"github.com/LeoTwins/go-clean-architecture/internal/interfaces/handler"
+	"github.com/LeoTwins/go-clean-architecture/internal/interfaces/middleware"
 	"github.com/LeoTwins/go-clean-architecture/internal/interfaces/presenter"
 	"github.com/LeoTwins/go-clean-architecture/internal/usecase/interacter"
 	"github.com/labstack/echo/v4"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
 func NewRouter(e *echo.Echo, db *gorm.DB) {
+	logger, err := zap.NewProduction()
+	if err != nil {
+		log.Print(err)
+	}
+
+	e.Use(middleware.Logger(logger))
+
 	accountRepo := repository.NewAccountRepository(db)
 	transactionRepo := repository.NewTransactionRepository(db)
 	transactionManager := service.NewTransactionManager(db)
