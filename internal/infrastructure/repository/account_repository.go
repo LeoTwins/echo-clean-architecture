@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"log"
 
 	domain "github.com/LeoTwins/go-clean-architecture/internal/domain/model"
 	"github.com/LeoTwins/go-clean-architecture/internal/domain/repository"
@@ -57,7 +56,6 @@ func (ar *accountRepository) Save(ctx context.Context, acc *domain.Account) erro
 }
 
 func (ar *accountRepository) Update(ctx context.Context, acc *domain.Account) error {
-	log.Print(acc)
 	dbAcc := dbModel.Account{
 		ID:      acc.ID,
 		Name:    acc.Name,
